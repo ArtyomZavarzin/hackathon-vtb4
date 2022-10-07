@@ -7,12 +7,13 @@ import {GlobalStyles, ThemeProvider} from '@mui/material'
 import theme from './theme'
 import {useAuth} from './hooks/use-auth'
 import {userRoles} from './common/constants'
+import AuthPage from './components/pages/auth-page'
 
 function App() {
   const [loadingApp, setLoadingApp] = useState(true)
   const dispatch = useDispatch()
 
-  const {userRole} = useAuth()
+  // const {userRole} = useAuth()
 
   // useEffect(() => {
   //   const fething = async () => {
@@ -26,9 +27,9 @@ function App() {
   //   fething()
   // }, [dispatch])
 
-  if (loadingApp) {
-    return <div></div>
-  }
+  // if (loadingApp) {
+  //   return <div></div>
+  // }
 
   return (
     <>
@@ -41,6 +42,7 @@ function App() {
       <Router>
         <ThemeProvider theme={theme}>
           <div className="App">
+            <AuthPage />
             {/* {userRole === userRoles.student && <StudentRoutes />}
             {userRole === userRoles.admin && <AdminRoutes />}
             {userRole === userRoles.company && <CompanyRoutes />}

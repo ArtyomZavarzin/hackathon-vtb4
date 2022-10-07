@@ -12,7 +12,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: 'Raleway, Roboto, Helvetica, Arial, sans-serif',
+    fontFamily: 'Sansation, Raleway, Roboto, Helvetica, Arial, sans-serif',
   },
   components: {
     // MuiCssBaseline: {

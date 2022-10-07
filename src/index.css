@@ -1,0 +1,6 @@
+@font-face {
+	font-family: 'Sansation';
+	src: url('./assets/fonts/sansation/Sansation\ Light.woff') format('woff2'), url('./assets/fonts/sansation/Sansation\ Light.woff2') format('woff');
+	font-weight: 300;
+	font-style: normal;
+}
