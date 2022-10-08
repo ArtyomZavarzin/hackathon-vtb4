@@ -8,6 +8,8 @@ import theme from './theme'
 import {useAuth} from './hooks/use-auth'
 import {userRoles} from './common/constants'
 import AuthPage from './components/pages/auth-page'
+import {CommonTemplate} from './components/template/template'
+import UserRoutes from './routes/user-routes'
 
 function App() {
   const [loadingApp, setLoadingApp] = useState(true)
@@ -36,13 +38,15 @@ function App() {
       <CssBaseline />
       <GlobalStyles
         styles={{
-          body: {backgroundColor: '#fbfbfd', fontFamily: 'Raleway, Roboto, Helvetica, Arial, sans-serif'},
+          body: {backgroundColor: 'white', fontFamily: 'Sansation, Roboto, Helvetica, Arial, sans-serif'},
         }}
       />
       <Router>
         <ThemeProvider theme={theme}>
           <div className="App">
-            <AuthPage />
+            {/* <AuthPage /> */}
+            {/* <CommonTemplate /> */}
+            <UserRoutes />
             {/* {userRole === userRoles.student && <StudentRoutes />}
             {userRole === userRoles.admin && <AdminRoutes />}
             {userRole === userRoles.company && <CompanyRoutes />}

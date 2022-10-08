@@ -8,7 +8,7 @@ const theme = createTheme({
   palette: {
     ...defaultTheme.palette,
     primary: {
-      main: indigo['A200'],
+      main: '#03A3DF',
     },
   },
   typography: {
