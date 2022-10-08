@@ -21,6 +21,7 @@ import {useState} from 'react'
 import {Visibility, VisibilityOff} from '@mui/icons-material'
 import StyledInput from '../../common-components/input-styled'
 import PersonIcon from '@mui/icons-material/Person'
+import {login, register} from '../../../store/actions/authAction'
 
 // const useStyles = makeStyles(theme => ({
 //   root: {
@@ -47,32 +48,34 @@ const AuthPage = () => {
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
 
-  //   const {isLoading, error} = useSelector(state => state.auth)
+  const {isLoading, error} = useSelector(state => state.auth)
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  //   const handleLogin = async () => {
-  //     const loginData = {email: email, password: pass}
-  //     const ok = await dispatch(login(loginData))
-  //     if (ok) {
-  //       navigate('/')
-  //     }
-  //     //   const auth = getAuth()
-  //     //   signInWithEmailAndPassword(auth, email, password)
-  //     //     .then(({user}) => {
-  //     //       console.log(user)
-  //     //       dispatch(
-  //     //         setUser({
-  //     //           email: user.email,
-  //     //           id: user.uid,
-  //     //           token: user.accessToken,
-  //     //         })
-  //     //       )
-  //     //       push('/')
-  //     //     })
-  //     //     .catch(() => alert('Invalid user!'))
-  //   }
+  const handleRegister = async () => {
+    const form = {
+      name: fio.split(' ')[0],
+      surname: fio.split(' ')[1],
+      middleName: fio.split(' ')[2],
+      email: email,
+      password: password,
+    }
+    if (password == repeatPassword) {
+      const ok = await dispatch(register(form))
+      if (ok) {
+        setCurrentSection(sections.login)
+      }
+    }
+  }
+
+  const handleLogin = async () => {
+    const loginData = {email: email, password: password}
+    const ok = await dispatch(login(loginData))
+    if (ok) {
+      navigate('/')
+    }
+  }
 
   return (
     <Box
@@ -194,6 +197,7 @@ const AuthPage = () => {
                     type={'text'}
                     value={email}
                     onChange={e => setEmail(e.target.value)}
+                    disabled={isLoading}
                     label="email"
                   />
                 </FormControl>
@@ -206,6 +210,7 @@ const AuthPage = () => {
                     type={isShowPassword ? 'text' : 'password'}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
+                    disabled={isLoading}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -232,6 +237,7 @@ const AuthPage = () => {
                     type={'text'}
                     value={fio}
                     onChange={e => setFio(e.target.value)}
+                    disabled={isLoading}
                     label="fio"
                   />
                 </FormControl>
@@ -244,6 +250,7 @@ const AuthPage = () => {
                     type={'text'}
                     value={email}
                     onChange={e => setEmail(e.target.value)}
+                    disabled={isLoading}
                     label="email"
                   />
                 </FormControl>
@@ -256,6 +263,7 @@ const AuthPage = () => {
                     type={isShowPassword ? 'text' : 'password'}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
+                    disabled={isLoading}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -280,6 +288,7 @@ const AuthPage = () => {
                     type={isShowPassword ? 'text' : 'password'}
                     value={repeatPassword}
                     onChange={e => setRepeatPassword(e.target.value)}
+                    disabled={isLoading}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -302,6 +311,8 @@ const AuthPage = () => {
               <ButtonBase
                 variant="contained"
                 sx={{mt: 5, background: 'white', borderRadius: '50px', padding: '10px 40px', width: '250px'}}
+                onClick={currentSection === sections.login ? () => handleLogin() : () => handleRegister()}
+                disabled={isLoading}
               >
                 <Typography sx={{fontSize: '30px'}}>
                   {currentSection === sections.login ? 'Войти' : 'Продолжить'}

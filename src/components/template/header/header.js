@@ -18,6 +18,8 @@ import HeaderPageBlock from './header-page-block'
 import ShopBlock from './shop-block'
 import ModalTransition from '../../common-components/modal-transition-up'
 import Basket from './basket'
+import {logout} from '../../../store/actions/authAction'
+import {useDispatch} from 'react-redux'
 
 const StyledLogo = styled(Box)(({theme}) => ({
   cursor: 'default',
@@ -99,6 +101,7 @@ const Header = () => {
   const [isOpenBasket, setIsOpenBasket] = useState(false)
   const [page, setPage] = useState('')
   let params = useParams()
+  const dispatch = useDispatch()
   useEffect(() => {
     setPage(params['*'].split('/')[0])
   }, [params])
@@ -128,6 +131,10 @@ const Header = () => {
     ),
   }
 
+  const handleLogout = () => {
+    dispatch(logout())
+  }
+
   return (
     <>
       <AppBar
@@ -144,7 +151,7 @@ const Header = () => {
           <Toolbar disableGutters>
             <Box sx={{flexGrow: 1, alignSelf: 'start'}}>
               <Box>
-                <StyledButton component={NavLink} to={'/profile'}>
+                <StyledButton component={NavLink} to={'/profile/me'}>
                   Профиль
                 </StyledButton>
 
@@ -164,7 +171,7 @@ const Header = () => {
                   Переводы
                 </StyledButton>
 
-                <StyledButton endIcon={<LogoutOutlinedIcon />} component={NavLink} to={'/auth'}>
+                <StyledButton endIcon={<LogoutOutlinedIcon />} onClick={handleLogout}>
                   Выход
                 </StyledButton>
               </Box>

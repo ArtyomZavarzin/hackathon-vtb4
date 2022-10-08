@@ -26,7 +26,7 @@ const Coins = () => {
           <Box
             sx={{
               width: '100%',
-              height: '200px',
+              height: '207px',
               background: '#3E4B7D',
               display: 'flex',
               flexDirection: 'column',
@@ -64,7 +64,7 @@ const Coins = () => {
           <Box
             sx={{
               width: '100%',
-              height: '200px',
+              height: '207px',
               background: '#03A3DF',
               display: 'flex',
               flexDirection: 'column',

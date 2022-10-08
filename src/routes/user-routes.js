@@ -11,7 +11,8 @@ const UserRoutes = () => {
       <Route path="/" element={<Navigate to="/profile" replace={true} />} />
       <Route path="auth" element={<AuthPage />} />
       <Route path="*" element={<CommonTemplate />}>
-        <Route path="profile" element={<ProfilePage />} />
+        <Route path="profile/me" element={<ProfilePage isSelf={true} />} />
+        <Route path="profile/:id" element={<ProfilePage />} />
         <Route path="shop" element={<ShopPage />} />
         <Route path="transacions" element={<TransactionsPage />} />
         {/* <Route path="companies/:id" element={<CompanyPage />} />

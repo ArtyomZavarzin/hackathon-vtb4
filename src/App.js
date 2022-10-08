@@ -10,29 +10,30 @@ import {userRoles} from './common/constants'
 import AuthPage from './components/pages/auth-page'
 import {CommonTemplate} from './components/template/template'
 import UserRoutes from './routes/user-routes'
+import {refresh} from './store/actions/authAction'
+import GuestRoutes from './routes/GuestRoutes'
 
 function App() {
   const [loadingApp, setLoadingApp] = useState(true)
   const dispatch = useDispatch()
 
-  // const {userRole} = useAuth()
+  const {userRole} = useAuth()
 
-  // useEffect(() => {
-  //   const fething = async () => {
-  //     setLoadingApp(true)
-  //     const refreshToken = localStorage.getItem('refreshToken')
-  //     if (refreshToken) {
-  //       await dispatch(refresh(refreshToken))
-  //     }
-  //     setLoadingApp(false)
-  //   }
-  //   fething()
-  // }, [dispatch])
+  useEffect(() => {
+    const fething = async () => {
+      setLoadingApp(true)
+      const refreshToken = localStorage.getItem('refreshToken')
+      if (refreshToken) {
+        await dispatch(refresh(refreshToken))
+      }
+      setLoadingApp(false)
+    }
+    fething()
+  }, [dispatch])
 
-  // if (loadingApp) {
-  //   return <div></div>
-  // }
-
+  if (loadingApp) {
+    return <div></div>
+  }
   return (
     <>
       <CssBaseline />
@@ -47,6 +48,8 @@ function App() {
             {/* <AuthPage /> */}
             {/* <CommonTemplate /> */}
             <UserRoutes />
+            {[null, undefined].includes(userRole) && <UserRoutes />}
+            {[null, undefined].includes(userRole) && <GuestRoutes />}
             {/* {userRole === userRoles.student && <StudentRoutes />}
             {userRole === userRoles.admin && <AdminRoutes />}
             {userRole === userRoles.company && <CompanyRoutes />}

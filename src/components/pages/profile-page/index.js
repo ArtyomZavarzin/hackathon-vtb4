@@ -16,7 +16,7 @@ import {
   FilledInput,
   Link,
 } from '@mui/material'
-import {useNavigate} from 'react-router-dom'
+import {useNavigate, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {useState} from 'react'
 import {Visibility, VisibilityOff} from '@mui/icons-material'
@@ -28,7 +28,10 @@ import Collections from './collections'
 import Articls from './articls'
 import {ReactComponent as LinesSvg} from '../../../assets/figures/3lines.svg'
 import Coins from './coins'
-
+import {useAuth} from '../../../hooks/use-auth'
+import {getUserInfo} from '../../../store/actions/userAction'
+import {useEffect} from 'react'
+import DoubleArrowIcon from '@mui/icons-material/DoubleArrow'
 // const useStyles = makeStyles(theme => ({
 //   root: {
 //     padding: theme.spacing(3),
@@ -43,10 +46,32 @@ const sections = {
   login: 'login',
 }
 
-const ProfilePage = () => {
+const ProfilePage = ({isSelf = false}) => {
+  const [isOwner, setIsOwner] = useState(false)
+  const [id, setId] = useState(null)
+
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const {id: paramsId} = useParams()
+
+  const {userId, userRole} = useAuth()
+  const {isLoadingUserInfo, userInfo} = useSelector(state => state.user)
+
+  useEffect(() => {
+    let currentId = isSelf ? userId : paramsId
+    setId(currentId)
+    dispatch(getUserInfo(currentId))
+  }, [userId, paramsId, isSelf, dispatch])
+
+  useEffect(() => {
+    if (+userId === +userInfo.id) {
+      setIsOwner(true)
+    }
+  }, [userInfo, userRole, userId])
+
   return (
     <>
-      <Grid container spacing={8} justifyContent="space-between">
+      <Grid container spacing={8} justifyContent="space-between" alignItems="center">
         <Grid item xs={8} sx={{overflow: 'hidden'}}>
           <Grid container spacing={5}>
             <Grid item>
@@ -63,7 +88,7 @@ const ProfilePage = () => {
                   color: '#27196C',
                 }}
               >
-                Иванов Иван
+                {userInfo.surname} {userInfo.name}
               </Typography>
               <Link
                 href="mailto:#"
@@ -77,14 +102,24 @@ const ProfilePage = () => {
                   color: '#03A3DF',
                 }}
               >
-                ivanivanov@ru
+                {userInfo.email}
               </Link>
             </Grid>
           </Grid>
         </Grid>
 
         <Grid item xs={4}>
-          <Coins />
+          {isOwner ? (
+            <Coins />
+          ) : (
+            <Button
+              sx={{width: '100%', height: '215px', border: '5px solid #03A3DF', borderRadius: '16px'}}
+              endIcon={<DoubleArrowIcon />}
+              onClick={() => navigate('/transacions', {replace: true})}
+            >
+              <Typography fontWeight={600}>Перевести средства или NFT</Typography>
+            </Button>
+          )}
         </Grid>
 
         <Grid item xs={12}>
