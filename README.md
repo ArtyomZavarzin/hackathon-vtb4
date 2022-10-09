@@ -1,3 +1,18 @@
+Для запуска нужно иметь установленную платформу Node.js
+
+Находясь в папке проекта выполнить следующую команду: 
+
+### `npm install`
+
+Затем:
+
+### `npm start`
+
+
+____________________________________________________
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
