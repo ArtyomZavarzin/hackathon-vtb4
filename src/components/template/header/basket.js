@@ -17,11 +17,13 @@ const StyledButton = styled(Button)(({theme}) => ({
 const mock = [
   {
     name: 'футболка',
-    price: 999,
+    price: 1999,
+    url: 'https://thumb.tildacdn.com/tild6238-3361-4739-b239-303132646462/-/resize/352x/-/format/webp/More_Tech____2.png',
   },
   {
-    name: 'кружка',
+    name: 'шоппер',
     price: 999,
+    url: 'https://thumb.tildacdn.com/tild3739-3930-4531-a238-646338616135/-/resize/254x/-/format/webp/18663467.png',
   },
 ]
 

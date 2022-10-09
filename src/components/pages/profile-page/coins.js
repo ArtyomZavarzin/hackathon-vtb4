@@ -1,5 +1,6 @@
 import {Divider, Typography, Box, Grid} from '@mui/material'
 import {useState} from 'react'
+import {asCrypto} from '../../../lib/numbers'
 import TitleBlock from './title-block'
 
 const mock = [
@@ -17,7 +18,7 @@ const mock = [
   },
 ]
 
-const Coins = () => {
+const Coins = ({cryptoBalaceData}) => {
   const [currentPage, setCurentPage] = useState(1)
   return (
     <>
@@ -37,14 +38,14 @@ const Coins = () => {
             <Typography
               sx={{
                 fontWeight: 700,
-                fontSize: '60px',
+                fontSize: '30px',
                 lineHeight: '67px',
                 textAlign: 'center',
                 textTransform: 'uppercase',
                 color: '#FFFFFF',
               }}
             >
-              50
+              {asCrypto(cryptoBalaceData.coinsAmount)}
             </Typography>
             <Typography
               sx={{
@@ -75,14 +76,14 @@ const Coins = () => {
             <Typography
               sx={{
                 fontWeight: 700,
-                fontSize: '60px',
+                fontSize: '30px',
                 lineHeight: '67px',
                 textAlign: 'center',
                 textTransform: 'uppercase',
                 color: '#FFFFFF',
               }}
             >
-              3
+              {asCrypto(cryptoBalaceData.maticAmount)}
             </Typography>
             <Typography
               sx={{

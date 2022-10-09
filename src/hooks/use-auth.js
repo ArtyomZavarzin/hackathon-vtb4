@@ -9,5 +9,6 @@ export function useAuth() {
     userData,
     givenName,
     userRole: userData.role,
+    userPublicKey: userData.publicKey,
   }
 }

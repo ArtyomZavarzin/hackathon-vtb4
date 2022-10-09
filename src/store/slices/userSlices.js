@@ -4,8 +4,7 @@ const initialState = {
   isLoading: false,
   userEditData: {},
   userEditError: '',
-  allStudents: [],
-  allStudentsError: '',
+  allUsersError: '',
   allUsers: [],
   isLoadingUserInfo: false,
   userInfo: {},
@@ -30,18 +29,18 @@ export const userSlice = createSlice({
       state.userEditError = action.payload
     },
 
-    getAllStudentsFetching: state => {
+    getAllUsersFetching: state => {
       state.isLoading = true
     },
-    getAllStudentsSuccses: (state, action) => {
+    getAllUsersSuccses: (state, action) => {
       state.isLoading = false
-      state.allStudents = action.payload
-      state.allStudentsError = ''
+      state.allUsers = action.payload
+      state.allUsersError = ''
     },
-    getAllStudentsError: (state, action) => {
+    getAllUsersError: (state, action) => {
       state.isLoading = false
-      state.allStudents = []
-      state.allStudentsError = action.payload
+      state.allUsers = []
+      state.allUsersError = action.payload
     },
 
     getUserInfoFetching: state => {
@@ -64,9 +63,9 @@ export const {
   getUserEditFetching,
   getUserEditSuccses,
   getUserEditError,
-  getAllStudentsFetching,
-  getAllStudentsSuccses,
-  getAllStudentsError,
+  getAllUsersFetching,
+  getAllUsersSuccses,
+  getAllUsersError,
   getUserInfoFetching,
   getUserInfoSuccses,
   getUserInfoError,

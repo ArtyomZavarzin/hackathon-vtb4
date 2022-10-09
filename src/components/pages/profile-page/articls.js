@@ -5,16 +5,16 @@ import TitleBlock from './title-block'
 
 const mock = [
   {
-    name: '1 nft',
+    name: '1 статья',
   },
   {
-    name: '31 nft',
+    name: 'Как я устроился в ВТБ',
   },
   {
-    name: '2 nft',
+    name: 'Ошибки в программировании',
   },
   {
-    name: '41 nft',
+    name: 'о nft',
   },
 ]
 
@@ -34,7 +34,7 @@ const Articls = () => {
                   sx={{
                     fontWeight: 700,
                     fontSize: '20px',
-                    lineHeight: '67px',
+                    lineHeight: '27px',
                     textTransform: 'uppercase',
                     color: '#27196C',
                   }}
@@ -65,7 +65,7 @@ const Articls = () => {
                       sx={{
                         fontWeight: 700,
                         fontSize: '20px',
-                        lineHeight: '67px',
+                        lineHeight: '27px',
                         textTransform: 'uppercase',
                         color: '#27196C',
                       }}

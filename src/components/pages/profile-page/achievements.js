@@ -2,19 +2,27 @@ import {Divider, Typography, Box, Grid, Modal, Link, Button} from '@mui/material
 import {useState} from 'react'
 import ModalTransition from '../../common-components/modal-transition-up'
 import TitleBlock from './title-block'
+import fig1 from '../../../assets/img/AbstractImages.png'
+import fig2 from '../../../assets/img/AbstractImages2.png'
+import fig3 from '../../../assets/img/Acstract3.png'
+import fig4 from '../../../assets/img/Acstract4.png'
 
 const mock = [
   {
-    name: '1 достижение',
+    name: 'С отправкой',
+    url: fig1,
   },
   {
-    name: '2 достижение',
+    name: 'Коллекционер',
+    url: fig2,
   },
   {
-    name: '3 достижение',
+    name: 'За выслугу лет',
+    url: fig3,
   },
   {
-    name: '4 достижение',
+    name: 'Писатель',
+    url: fig4,
   },
 ]
 
@@ -29,7 +37,20 @@ const Achievements = () => {
           return (
             <Grid item xs={4}>
               <Box sx={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
-                <Box sx={{width: '150px', height: '150px', borderRadius: '50%', backgroundColor: '#F5F5F5'}}></Box>
+                <Box
+                  sx={{
+                    width: '150px',
+                    height: '150px',
+                    borderRadius: '50%',
+                    backgroundColor: '#F5F5F5',
+                    backgroundImage: `url(${el.url})`,
+                    backgroundPosition: 'center',
+                    backgroundSize: 'contain',
+                    backgroundOrigin: 'content-box',
+                    padding: '10px',
+                    backgroundRepeat: 'no-repeat',
+                  }}
+                ></Box>
                 <Typography
                   sx={{
                     fontWeight: 700,
@@ -60,7 +81,20 @@ const Achievements = () => {
               return (
                 <Grid item xs={4}>
                   <Box sx={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
-                    <Box sx={{width: '150px', height: '150px', borderRadius: '50%', backgroundColor: '#F5F5F5'}}></Box>
+                    <Box
+                      sx={{
+                        width: '150px',
+                        height: '150px',
+                        borderRadius: '50%',
+                        backgroundColor: '#F5F5F5',
+                        backgroundImage: `url(${el.url})`,
+                        backgroundPosition: 'center',
+                        backgroundSize: 'contain',
+                        backgroundOrigin: 'content-box',
+                        padding: '10px',
+                        backgroundRepeat: 'no-repeat',
+                      }}
+                    ></Box>
                     <Typography
                       sx={{
                         fontWeight: 700,

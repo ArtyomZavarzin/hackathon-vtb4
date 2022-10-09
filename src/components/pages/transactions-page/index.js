@@ -11,7 +11,12 @@ import {
   RadioGroup,
   Typography,
 } from '@mui/material'
-import {useState} from 'react'
+import {useCallback, useEffect, useState} from 'react'
+import {useDispatch, useSelector} from 'react-redux'
+import {useParams} from 'react-router-dom'
+import {useAuth} from '../../../hooks/use-auth'
+import {getAllNft, getCryptoBalance} from '../../../store/actions/cryptoAction'
+import {sendMatic, sendNft, sendRuble} from '../../../store/actions/walletActions'
 import StyledInput from '../../common-components/input-styled'
 import Coins from '../profile-page/coins'
 import CurrencyTab from './currency-tab'
@@ -30,10 +35,71 @@ const StyledButton = styled(Button)(({theme}) => ({
   },
 }))
 
-const TransactionsPage = () => {
+const TransactionsPage = props => {
   const [recipient, setRecipient] = useState('')
-
+  const [amuont, setAmuont] = useState('')
+  const [currentNft, setCurrentNft] = useState(null)
+  const {email: paramsEmail} = useParams()
   const [tab, setTab] = useState('currency')
+
+  const dispatch = useDispatch()
+
+  const {userId, userPublicKey, userRole} = useAuth()
+
+  const {isLoadingcryptoBalace, cryptoBalaceData, allNftData} = useSelector(state => state.crypto)
+
+  const getActualBalace = useCallback(() => {
+    if (userId) {
+      dispatch(getCryptoBalance(userPublicKey))
+      dispatch(getAllNft(userPublicKey))
+    }
+  }, [userRole, userId])
+
+  useEffect(() => {
+    getActualBalace()
+  }, [getActualBalace])
+
+  useEffect(() => {
+    if (paramsEmail) {
+      setRecipient(paramsEmail)
+    }
+  }, [paramsEmail])
+
+  const onSendMatic = useCallback(async () => {
+    const form = {
+      email: recipient,
+      amount: +amuont,
+    }
+    const {ok} = await dispatch(sendMatic(form))
+    if (ok) {
+      getActualBalace()
+      setAmuont('')
+    }
+  }, [recipient, amuont, dispatch, getActualBalace])
+
+  const onSendRuble = useCallback(async () => {
+    const form = {
+      email: recipient,
+      amount: +amuont,
+    }
+    const {ok} = await dispatch(sendRuble(form))
+    if (ok) {
+      getActualBalace()
+      setAmuont('')
+    }
+  }, [recipient, amuont, dispatch, getActualBalace])
+
+  const onSendNft = useCallback(async () => {
+    const form = {
+      email: recipient,
+      nftId: +currentNft,
+    }
+    const {ok} = await dispatch(sendNft(form))
+    if (ok) {
+      getActualBalace()
+      setCurrentNft(null)
+    }
+  }, [recipient, currentNft, dispatch, getActualBalace])
 
   const activeStyle = {
     width: '150px',
@@ -57,7 +123,7 @@ const TransactionsPage = () => {
         >
           Ваши средства
         </Typography>
-        <Coins />
+        <Coins cryptoBalaceData={cryptoBalaceData} />
       </Grid>
       <Grid item xs={8}>
         <Typography
@@ -94,7 +160,22 @@ const TransactionsPage = () => {
           </Button>
         </ButtonGroup>
 
-        {tab === 'currency' ? <CurrencyTab /> : <NftTab />}
+        {tab === 'currency' ? (
+          <CurrencyTab
+            userRole={userRole}
+            amount={amuont}
+            setAmuont={setAmuont}
+            sendMatic={onSendMatic}
+            onSendRuble={onSendRuble}
+          />
+        ) : (
+          <NftTab
+            collections={allNftData?.balance || []}
+            onSendNft={onSendNft}
+            currentNft={currentNft}
+            setCurrentNft={setCurrentNft}
+          />
+        )}
       </Grid>
     </Grid>
   )

@@ -1,5 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit'
 import authSlices from './slices/authSlices'
+import cryptoSlices from './slices/cryptoSlices'
+import groupSlices from './slices/groupSlices'
 // import companySlices from './slices/companySlices'
 // import jobApplicationSlices from './slices/jobApplicationSlices'
 // import reviewsSlices from './slices/reviewsSlices'
@@ -11,6 +13,8 @@ import userSlices from './slices/userSlices'
 const roorReducer = {
   auth: authSlices,
   user: userSlices,
+  crypto: cryptoSlices,
+  group: groupSlices,
   // whitelist: whitelistSlices,
   // company: companySlices,
   // reviews: reviewsSlices,

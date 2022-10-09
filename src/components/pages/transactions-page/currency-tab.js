@@ -15,6 +15,7 @@ import {
 } from '@mui/material'
 import StyledInput from '../../common-components/input-styled'
 import {useState} from 'react'
+import {userRoles} from '../../../common/constants'
 
 const StyledButton = styled(Button)(({theme}) => ({
   backgroundColor: '#03A3DF',
@@ -29,9 +30,8 @@ const StyledButton = styled(Button)(({theme}) => ({
   },
 }))
 
-const CurrencyTab = ({}) => {
-  const [amuont, setAmuont] = useState('')
-  const [currency, setCurrency] = useState('matic')
+const CurrencyTab = ({userRole, amuont, setAmuont, sendMatic, onSendRuble}) => {
+  const [currency, setCurrency] = useState('digital rubles')
   const [isRegulary, setIsRegulary] = useState(false)
 
   return (
@@ -55,20 +55,24 @@ const CurrencyTab = ({}) => {
           aria-labelledby="demo-row-radio-buttons-group-label"
           name="row-radio-buttons-group"
         >
-          <FormControlLabel value="matic" control={<Radio />} label="matic" />
           <FormControlLabel value="digital rubles" control={<Radio />} label="digital rubles" />
+          <FormControlLabel value="matic" control={<Radio />} label="matic" />
         </RadioGroup>
       </FormControl>
-      <FormControlLabel
-        sx={{ml: '0'}}
-        checked={isRegulary}
-        onChange={() => {
-          setIsRegulary(!isRegulary)
-        }}
-        control={<Checkbox />}
-        label="Регулярный платеж (раз в месяц)"
-      />
-      <Box sx={{display: 'flex', justifyContent: 'center'}}>
+      {userRole === userRoles.leader ||
+        (userRole === userRoles.admin && (
+          <FormControlLabel
+            sx={{ml: '-4px'}}
+            checked={isRegulary}
+            onChange={() => {
+              setIsRegulary(!isRegulary)
+            }}
+            control={<Checkbox />}
+            label="Регулярный платеж (раз в месяц)"
+          />
+        ))}
+
+      <Box sx={{display: 'flex', justifyContent: 'center'}} onClick={currency === 'matic' ? sendMatic : onSendRuble}>
         <StyledButton sx={{mt: 2}}>Перевести</StyledButton>
       </Box>
     </>

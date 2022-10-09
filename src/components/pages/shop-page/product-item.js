@@ -4,7 +4,20 @@ const ProductItem = ({product}) => {
   return (
     <>
       <Box sx={{display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}}>
-        <Box sx={{width: '100%', height: '350px', borderRadius: '8px', backgroundColor: '#F5F5F5'}}></Box>
+        <Box
+          sx={{
+            width: '100%',
+            height: '350px',
+            borderRadius: '8px',
+            backgroundColor: '#F5F5F5',
+            backgroundImage: `url(${product.url})`,
+            backgroundPosition: 'center',
+            backgroundSize: 'contain',
+            backgroundOrigin: 'content-box',
+            padding: '30px',
+            backgroundRepeat: 'no-repeat',
+          }}
+        ></Box>
         <Grid container spacing={2} justifyContent="space-between">
           <Grid item>
             <Typography

@@ -4,8 +4,8 @@ import {
   getUserEditFetching,
   getUserEditSuccses,
   getUserEditError,
-  getAllStudentsFetching,
-  getAllStudentsSuccses,
+  getAllUsersFetching,
+  getAllUsersSuccses,
   getUserInfoFetching,
   getUserInfoSuccses,
   getUserInfoError,
@@ -39,16 +39,16 @@ export const editUserData = form => async dispatch => {
   } catch (e) {}
 }
 
-export const getAllStudents = () => async dispatch => {
+export const getAllUsers = () => async dispatch => {
   try {
-    dispatch(getAllStudentsFetching())
-    const response = await userService.getAllStudents()
+    dispatch(getAllUsersFetching())
+    const response = await userService.getAllUsers()
     const {ok, data, errors} = getResponse(response)
 
     if (ok) {
-      dispatch(getAllStudentsSuccses(data))
+      dispatch(getAllUsersSuccses(data))
     } else {
-      dispatch(getAllStudentsFetching(errors))
+      dispatch(getAllUsersFetching(errors))
     }
   } catch (e) {}
 }

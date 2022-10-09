@@ -20,6 +20,8 @@ import ModalTransition from '../../common-components/modal-transition-up'
 import Basket from './basket'
 import {logout} from '../../../store/actions/authAction'
 import {useDispatch} from 'react-redux'
+import {useAuth} from '../../../hooks/use-auth'
+import {userRoles} from '../../../common/constants'
 
 const StyledLogo = styled(Box)(({theme}) => ({
   cursor: 'default',
@@ -46,7 +48,7 @@ const StyledButton = styled(Button)(({theme}) => ({
   position: 'relative',
   overflow: 'hidden',
   transition: 'all 0.3s',
-  textTransform: 'lowercase',
+  textTransform: 'none',
   fontSize: '18px',
   '&::after': {
     content: '""',
@@ -102,6 +104,7 @@ const Header = () => {
   const [page, setPage] = useState('')
   let params = useParams()
   const dispatch = useDispatch()
+  const {userRole} = useAuth()
   useEffect(() => {
     setPage(params['*'].split('/')[0])
   }, [params])
@@ -129,6 +132,49 @@ const Header = () => {
         }
       />
     ),
+    users: (
+      <HeaderPageBlock
+        title={
+          <>
+            Список
+            <br />
+            пользователей
+          </>
+        }
+      />
+    ),
+    'new-nft': (
+      <HeaderPageBlock
+        title={
+          <>
+            Создание
+            <br />
+            коллекции
+          </>
+        }
+      />
+    ),
+    activities: (
+      <HeaderPageBlock
+        title={
+          <>
+            Активности
+            <br />
+          </>
+        }
+      />
+    ),
+    groups: (
+      <HeaderPageBlock
+        title={
+          <>
+            Группы и
+            <br />
+            команды
+          </>
+        }
+      />
+    ),
   }
 
   const handleLogout = () => {
@@ -152,27 +198,43 @@ const Header = () => {
             <Box sx={{flexGrow: 1, alignSelf: 'start'}}>
               <Box>
                 <StyledButton component={NavLink} to={'/profile/me'}>
-                  Профиль
+                  профиль
                 </StyledButton>
 
                 <StyledButton component={NavLink} to={'/blog'}>
-                  Блог
+                  блог
                 </StyledButton>
 
                 <StyledButton component={NavLink} to={'/shop'}>
-                  Магазин
+                  магазин
                 </StyledButton>
 
                 <StyledButton component={NavLink} to={'/activities'}>
-                  Активности
+                  активности
                 </StyledButton>
 
-                <StyledButton component={NavLink} to={'/transacions'}>
-                  Переводы
+                <StyledButton component={NavLink} to={'/transacions'} exact={false}>
+                  переводы
                 </StyledButton>
+
+                <StyledButton component={NavLink} to={'/groups'} exact={false}>
+                  группы
+                </StyledButton>
+
+                {userRole === userRoles.admin && (
+                  <>
+                    <StyledButton component={NavLink} to={'/users'} exact={false}>
+                      пользователи
+                    </StyledButton>
+
+                    <StyledButton component={NavLink} to={'/new-nft'} exact={false}>
+                      создание NFT
+                    </StyledButton>
+                  </>
+                )}
 
                 <StyledButton endIcon={<LogoutOutlinedIcon />} onClick={handleLogout}>
-                  Выход
+                  выход
                 </StyledButton>
               </Box>
               <Box>{pageBlocks[page]}</Box>

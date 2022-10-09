@@ -1,9 +1,14 @@
 import axios from 'axios'
 
 export const API_URL = 'https://localhost:5001/'
+export const API_URL_CRYPTO = 'https://hackathon.lsp.team/hk/'
 
 const api = axios.create({
   baseURL: API_URL,
+})
+
+export const cryptoApi = axios.create({
+  baseURL: API_URL_CRYPTO,
 })
 
 api.interceptors.request.use(config => {

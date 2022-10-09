@@ -12,6 +12,7 @@ import {CommonTemplate} from './components/template/template'
 import UserRoutes from './routes/user-routes'
 import {refresh} from './store/actions/authAction'
 import GuestRoutes from './routes/GuestRoutes'
+import AdminRoutes from './routes/admin-routes'
 
 function App() {
   const [loadingApp, setLoadingApp] = useState(true)
@@ -47,8 +48,8 @@ function App() {
           <div className="App">
             {/* <AuthPage /> */}
             {/* <CommonTemplate /> */}
-            <UserRoutes />
-            {[null, undefined].includes(userRole) && <UserRoutes />}
+            {[userRoles.worker].includes(userRole) && <UserRoutes />}
+            {[userRoles.admin].includes(userRole) && <AdminRoutes />}
             {[null, undefined].includes(userRole) && <GuestRoutes />}
             {/* {userRole === userRoles.student && <StudentRoutes />}
             {userRole === userRoles.admin && <AdminRoutes />}

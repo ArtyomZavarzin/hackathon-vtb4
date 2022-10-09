@@ -9,17 +9,8 @@ export const responseStatus = {
 }
 
 export const userRoles = {
+  worker: 0,
+  editor: 1,
+  leader: 2,
   admin: 3,
-}
-
-export const approvalStates = {
-  pending: 0,
-  submited: 1,
-  rejected: 2,
-}
-
-export const applicationStates = {
-  pending: 2,
-  submited: 0,
-  rejected: 1,
 }

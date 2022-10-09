@@ -15,6 +15,24 @@ const theme = createTheme({
     fontFamily: 'Sansation, Raleway, Roboto, Helvetica, Arial, sans-serif',
   },
   components: {
+    MuiTab: {
+      styleOverrides: {
+        root: {
+          padding: '6px 60px',
+          marginRight: '24px',
+          minHeight: 'auto',
+          textTransform: 'none',
+          borderRadius: '10px 10px 0px 0px',
+          border: '1px solid #fff',
+          color: '#fff',
+          '&.Mui-selected': {
+            fontWeight: 'bold',
+            backgroundColor: '#fff',
+            color: '#000',
+          },
+        },
+      },
+    },
     // MuiCssBaseline: {
     //   styleOverrides: `
     //     @font-face {

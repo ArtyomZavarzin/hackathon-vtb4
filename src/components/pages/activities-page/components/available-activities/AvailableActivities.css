@@ -1,0 +1,18 @@
+.title-block {
+    font-style: normal;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 28px;
+
+    color: #03A3DF;
+}
+
+.author-block {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.author-block p {
+    margin-bottom: 0;
+}

@@ -32,6 +32,7 @@ import {useAuth} from '../../../hooks/use-auth'
 import {getUserInfo} from '../../../store/actions/userAction'
 import {useEffect} from 'react'
 import DoubleArrowIcon from '@mui/icons-material/DoubleArrow'
+import {getCryptoBalance, getAllNft} from '../../../store/actions/cryptoAction'
 // const useStyles = makeStyles(theme => ({
 //   root: {
 //     padding: theme.spacing(3),
@@ -54,8 +55,9 @@ const ProfilePage = ({isSelf = false}) => {
   const navigate = useNavigate()
   const {id: paramsId} = useParams()
 
-  const {userId, userRole} = useAuth()
-  const {isLoadingUserInfo, userInfo} = useSelector(state => state.user)
+  const {userId, userRole, userPublicKey} = useAuth()
+  const {userInfo} = useSelector(state => state.user)
+  const {cryptoBalaceData, allNftData} = useSelector(state => state.crypto)
 
   useEffect(() => {
     let currentId = isSelf ? userId : paramsId
@@ -66,12 +68,17 @@ const ProfilePage = ({isSelf = false}) => {
   useEffect(() => {
     if (+userId === +userInfo.id) {
       setIsOwner(true)
+      dispatch(getCryptoBalance(userPublicKey))
     }
-  }, [userInfo, userRole, userId])
+  }, [userInfo, userRole, userId, dispatch, userPublicKey])
+
+  useEffect(() => {
+    if (userInfo.publicKey) dispatch(getAllNft(userInfo.publicKey))
+  }, [dispatch, userInfo])
 
   return (
     <>
-      <Grid container spacing={8} justifyContent="space-between" alignItems="center">
+      <Grid container spacing={8} justifyContent="space-between" sx={{flexWrap: 'nowrap'}}>
         <Grid item xs={8} sx={{overflow: 'hidden'}}>
           <Grid container spacing={5}>
             <Grid item>
@@ -110,28 +117,27 @@ const ProfilePage = ({isSelf = false}) => {
 
         <Grid item xs={4}>
           {isOwner ? (
-            <Coins />
+            <Coins cryptoBalaceData={cryptoBalaceData} />
           ) : (
             <Button
               sx={{width: '100%', height: '215px', border: '5px solid #03A3DF', borderRadius: '16px'}}
               endIcon={<DoubleArrowIcon />}
-              onClick={() => navigate('/transacions', {replace: true})}
+              onClick={() => navigate(`/transacions/${userInfo.email}`)}
             >
               <Typography fontWeight={600}>Перевести средства или NFT</Typography>
             </Button>
           )}
         </Grid>
-
-        <Grid item xs={12}>
-          <Achievements />
-        </Grid>
-        <Grid item xs={12}>
-          <Articls />
-        </Grid>
-        <Grid item xs={12}>
-          <Collections />
-        </Grid>
       </Grid>
+      <Box sx={{mt: 4}}>
+        <Collections collections={allNftData?.balance || []} />
+      </Box>
+      <Box sx={{mt: 4}}>
+        <Achievements />
+      </Box>
+      <Box sx={{mt: 4}}>
+        <Articls />
+      </Box>
     </>
   )
 }

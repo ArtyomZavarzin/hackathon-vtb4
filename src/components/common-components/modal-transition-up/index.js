@@ -7,8 +7,15 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 const ModalTransition = ({isOpen, onClose, children, maxWidth = 'sm', title}) => {
   return (
-    <Dialog open={isOpen} onClose={onClose} fullWidth={true} maxWidth={maxWidth} TransitionComponent={Transition}>
-      <DialogContent>
+    <Dialog
+      open={isOpen}
+      onClose={onClose}
+      fullWidth={true}
+      maxWidth={maxWidth}
+      TransitionComponent={Transition}
+      scroll="body"
+    >
+      <DialogContent sx={{pb: 5}}>
         <Typography
           sx={{
             fontWeight: 700,

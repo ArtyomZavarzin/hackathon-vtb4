@@ -12,8 +12,9 @@ import {
   Typography,
 } from '@mui/material'
 import StyledInput from '../../common-components/input-styled'
-import {useState} from 'react'
+import {useMemo, useState} from 'react'
 import {Box} from '@mui/system'
+import NftElement from '../../common-components/nft-element'
 
 const mock = [
   {
@@ -43,49 +44,36 @@ const StyledButton = styled(Button)(({theme}) => ({
   },
 }))
 
-const style1 = {display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center'}
-const style2 = {
-  boxSizing: 'border-box',
-  display: 'flex',
-  justifyContent: 'center',
-  flexDirection: 'column',
-  alignItems: 'center',
-  border: '3px solid #03A3DF',
-  borderRadius: '8PX',
-}
-
-const NftTab = ({}) => {
-  const [currentNft, setCurrentNft] = useState(null)
+const NftTab = ({collections, onSendNft, setCurrentNft, currentNft}) => {
+  const nftToShow = useMemo(() => {
+    const list = []
+    collections.forEach(element => {
+      list.push(...element.tokens.map(token => ({tokenId: token, uri: element.uri})))
+    })
+    return list
+  }, [collections])
 
   return (
     <>
       <Grid container spacing={4} sx={{mt: 2}}>
-        {mock.map((el, index) => {
+        {nftToShow.map(el => {
           return (
-            <Grid key={index} item xs={4} onClick={() => setCurrentNft(index)}>
-              <Box sx={currentNft === index ? style2 : style1}>
-                <Box
-                  sx={{width: '150px', height: '150px', borderRadius: '50%', backgroundColor: '#F5F5F5', mt: 1}}
-                ></Box>
-                <Typography
-                  sx={{
-                    fontWeight: 700,
-                    fontSize: '20px',
-                    lineHeight: '47px',
-                    textTransform: 'uppercase',
-                    color: '#27196C',
-                  }}
-                >
-                  {el.name}
-                </Typography>
-              </Box>
+            <Grid item xs={4} onClick={() => setCurrentNft(el.tokenId)}>
+              <NftElement uri={el.uri} tokenId={el.tokenId} selected={currentNft === el.tokenId} />
             </Grid>
           )
         })}
       </Grid>
 
       <Box sx={{display: 'flex', justifyContent: 'center'}}>
-        <StyledButton sx={{mt: 2}}>Перевести</StyledButton>
+        <StyledButton
+          sx={{mt: 2}}
+          onClick={() => {
+            onSendNft(currentNft)
+          }}
+        >
+          Перевести
+        </StyledButton>
       </Box>
     </>
   )
